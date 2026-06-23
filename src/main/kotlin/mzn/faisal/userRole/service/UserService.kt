@@ -10,6 +10,10 @@ class UserService {
 
 
     suspend fun registerUser(userIdentifier: String): String {
+        if (users.containsKey(userIdentifier)) {
+            throw Exception("User already exists")
+        }
+
         users[userIdentifier] = 0L
         return userIdentifier
     }
