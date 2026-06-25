@@ -37,13 +37,9 @@ class UserService {
         if (!users.contains(userIdentifier)) throw Exception("User not found")
         val mask = users[userIdentifier] ?: 0L
 
-        for (curRole in UserRole.entries){
-            if(curRole.ordinal == role){
-                return (mask and curRole.value) == curRole.value
-            }
-        }
+        val targetRole = UserRole.entries.getOrNull(role) ?: return false
 
-        return false
+        return (mask and targetRole.value) == targetRole.value
     }
 
 
@@ -51,14 +47,9 @@ class UserService {
         if (!users.contains(userIdentifier)) throw Exception("User not found")
         val mask = users[userIdentifier] ?: 0L
 
-        val userRoles = mutableListOf<UserRole>()
-        for (curRole in UserRole.entries) {
-            if ((mask and curRole.value) == curRole.value) {
-                userRoles.add(curRole)
-            }
+        return UserRole.entries.filter { curRole ->
+            (mask and curRole.value) == curRole.value
         }
-
-        return userRoles
     }
 
 }
