@@ -16,8 +16,8 @@ class GetUserRolesController(
     suspend fun getUserRoles(@RequestParam userIdentifier: String): List<UserRoleResponse> {
         val roles = userService.getUserRoles(userIdentifier)
 
-        return roles.map { role ->
-            UserRoleResponse(id = role.ordinal, name = role.name)
+        return roles.map { (id, name) ->
+            UserRoleResponse(id = id, name = name)
         }
     }
 }
